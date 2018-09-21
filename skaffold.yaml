@@ -18,27 +18,27 @@ build:
   tagPolicy:
     gitCommit: {}
   artifacts:
-  - imageName: gcr.io/microservices-demo-app/emailservice
+  - imageName: eu.gcr.io/next18-london-keynote/emailservice
     workspace: src/emailservice
-  - imageName: gcr.io/microservices-demo-app/productcatalogservice
+  - imageName: eu.gcr.io/next18-london-keynote/productcatalogservice
     workspace: src/productcatalogservice
-  - imageName: gcr.io/microservices-demo-app/recommendationservice
+  - imageName: eu.gcr.io/next18-london-keynote/recommendationservice
     workspace: src/recommendationservice
-  - imageName: gcr.io/microservices-demo-app/shippingservice
+  - imageName: eu.gcr.io/next18-london-keynote/shippingservice
     workspace: src/shippingservice
-  - imageName: gcr.io/microservices-demo-app/checkoutservice
+  - imageName: eu.gcr.io/next18-london-keynote/checkoutservice
     workspace: src/checkoutservice
-  - imageName: gcr.io/microservices-demo-app/paymentservice
+  - imageName: eu.gcr.io/next18-london-keynote/paymentservice
     workspace: src/paymentservice
-  - imageName: gcr.io/microservices-demo-app/currencyservice
+  - imageName: eu.gcr.io/next18-london-keynote/currencyservice
     workspace: src/currencyservice
-  - imageName: gcr.io/microservices-demo-app/cartservice
+  - imageName: eu.gcr.io/next18-london-keynote/cartservice
     workspace: src/cartservice
-  - imageName: gcr.io/microservices-demo-app/frontend
+  - imageName: eu.gcr.io/next18-london-keynote/frontend
     workspace: src/frontend
-  - imageName: gcr.io/microservices-demo-app/loadgenerator
+  - imageName: eu.gcr.io/next18-london-keynote/loadgenerator
     workspace: src/loadgenerator
-  - imageName: gcr.io/microservices-demo-app/adservice
+  - imageName: eu.gcr.io/next18-london-keynote/adservice
     workspace: src/adservice
 deploy:
   kubectl:
