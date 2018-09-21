@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: gcr.io/microservices-demo-app/checkoutservice
+          image: eu.gcr.io/next18-london-keynote/checkoutservice
           ports:
           - containerPort: 5050
           readinessProbe:

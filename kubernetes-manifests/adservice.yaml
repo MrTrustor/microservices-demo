@@ -25,7 +25,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/microservices-demo-app/adservice
+        image: eu.gcr.io/next18-london-keynote/adservice
         ports:
         - containerPort: 9555
         env:
