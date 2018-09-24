@@ -136,6 +136,9 @@ type productCatalog struct{}
 func parseCatalog() []*pb.Product {
 	var cat pb.ListProductsResponse
 
+	// FIXME
+	time.Sleep(10 * time.Millisecond)
+
 	if err := jsonpb.Unmarshal(bytes.NewReader(catalogJSON), &cat); err != nil {
 		log.Printf("warning: failed to parse the catalog JSON: %v", err)
 		return nil
