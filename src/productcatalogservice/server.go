@@ -15,11 +15,9 @@
 package main
 
 import (
-	"bytes"
 	"context"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net"
 	"strings"
@@ -30,7 +28,6 @@ import (
 
 	"cloud.google.com/go/profiler"
 	"contrib.go.opencensus.io/exporter/stackdriver"
-	"github.com/golang/protobuf/jsonpb"
 	"go.opencensus.io/plugin/ocgrpc"
 	"go.opencensus.io/stats/view"
 	"go.opencensus.io/trace"
@@ -39,24 +36,77 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-var (
-	catalogJSON []byte
+var port = flag.Int("port", 3550, "port to listen at")
 
-	port = flag.Int("port", 3550, "port to listen at")
-)
-
-func init() {
-	c, err := ioutil.ReadFile("products.json")
-	if err != nil {
-		log.Fatalf("failed to open product catalog json file: %v", err)
-	}
-	catalogJSON = c
-	log.Printf("successfully parsed product catalog json")
+var catalog = []*pb.Product{
+	{
+		Id:          "OLJCESPC7Z",
+		Name:        "Vintage Typewriter",
+		Description: "This typewriter looks good in your living room.",
+		Picture:     "/static/img/products/typewriter.jpg",
+		PriceUsd:    &pb.Money{CurrencyCode: "USD", Units: 67, Nanos: 990000000},
+	},
+	{
+		Id:          "66VCHSJNUP",
+		Name:        "Vintage Camera Lens",
+		Description: "You won't have a camera to use it and it probably doesn't work anyway.",
+		Picture:     "/static/img/products/camera-lens.jpg",
+		PriceUsd:    &pb.Money{CurrencyCode: "USD", Units: 12, Nanos: 490000000},
+	},
+	{
+		Id:          "1YMWWN1N4O",
+		Name:        "Home Barista Kit",
+		Description: "Always wanted to brew coffee with Chemex and Aeropress at home?",
+		Picture:     "/static/img/products/barista-kit.jpg",
+		PriceUsd:    &pb.Money{CurrencyCode: "USD", Units: 124, Nanos: 0},
+	},
+	{
+		Id:          "L9ECAV7KIM",
+		Name:        "Terrarium",
+		Description: "This terrarium will looks great in your white painted living room.",
+		Picture:     "/static/img/products/terrarium.jpg",
+		PriceUsd:    &pb.Money{CurrencyCode: "USD", Units: 36, Nanos: 450000000},
+	},
+	{
+		Id:          "2ZYFJ3GM2N",
+		Name:        "Film Camera",
+		Description: "This camera looks like it's a film camera, but it's actually digital.",
+		Picture:     "/static/img/products/film-camera.jpg",
+		PriceUsd:    &pb.Money{CurrencyCode: "USD", Units: 2245, Nanos: 00000000},
+	},
+	{
+		Id:          "0PUK6V6EV0",
+		Name:        "Vintage Record Player",
+		Description: "It still works.",
+		Picture:     "/static/img/products/record-player.jpg",
+		PriceUsd:    &pb.Money{CurrencyCode: "USD", Units: 65, Nanos: 500000000},
+	},
+	{
+		Id:          "LS4PSXUNUM",
+		Name:        "Metal Camping Mug",
+		Description: "You probably don't go camping that often but this is better than plastic cups.",
+		Picture:     "/static/img/products/camp-mug.jpg",
+		PriceUsd:    &pb.Money{CurrencyCode: "USD", Units: 24, Nanos: 330000000},
+	},
+	{
+		Id:          "9SIQT8TOJO",
+		Name:        "City Bike",
+		Description: "This single gear bike probably cannot climb the hills of San Francisco.",
+		Picture:     "/static/img/products/city-bike.jpg",
+		PriceUsd:    &pb.Money{CurrencyCode: "USD", Units: 789, Nanos: 500000000},
+	},
+	{
+		Id:          "6E92ZMYYFZ",
+		Name:        "Air Plant",
+		Description: "Have you ever wondered whether air plants need water? Buy one and figure out.",
+		Picture:     "/static/img/products/air-plant.jpg",
+		PriceUsd:    &pb.Money{CurrencyCode: "USD", Units: 12, Nanos: 300000000},
+	},
 }
 
 func main() {
 	go initTracing()
-	go initProfiling("productcatalogservice", "1.0.0")
+	go initProfiling("productcatalogservice", "1.0.1")
 	flag.Parse()
 
 	log.Printf("starting grpc server at :%d", *port)
@@ -134,13 +184,7 @@ func initProfiling(service, version string) {
 type productCatalog struct{}
 
 func parseCatalog() []*pb.Product {
-	var cat pb.ListProductsResponse
-
-	if err := jsonpb.Unmarshal(bytes.NewReader(catalogJSON), &cat); err != nil {
-		log.Printf("warning: failed to parse the catalog JSON: %v", err)
-		return nil
-	}
-	return cat.Products
+	return catalog
 }
 
 func (p *productCatalog) Check(ctx context.Context, req *healthpb.HealthCheckRequest) (*healthpb.HealthCheckResponse, error) {
