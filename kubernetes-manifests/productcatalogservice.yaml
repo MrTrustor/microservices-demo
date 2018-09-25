@@ -30,10 +30,10 @@ spec:
         - containerPort: 3550
         readinessProbe:
           exec:
-            command: ["/bin/grpc_health_probe", "-addr=:3550"]
+            command: ["/bin/grpc_health_probe", "-addr=:3550", "-connect-timeout", "2000ms", "-rpc-timeout", "2000ms"]
         livenessProbe:
           exec:
-            command: ["/bin/grpc_health_probe", "-addr=:3550"]
+            command: ["/bin/grpc_health_probe", "-addr=:3550", "-connect-timeout", "2000ms", "-rpc-timeout", "2000ms"]
         resources:
           requests:
             cpu: 100m
