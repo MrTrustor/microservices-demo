@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net"
 	"strings"
 	"time"
@@ -137,19 +138,22 @@ func parseCatalog() []*pb.Product {
 	var cat pb.ListProductsResponse
 
 	// FIXME
-	done := make(chan int)
-	go func() {
-		for {
-			select {
-			case <-done:
-				return
-			default:
+	if rand.Intn(50) == 1 {
+		done := make(chan int)
+		go func() {
+			for {
+				select {
+				case <-done:
+					return
+				default:
+				}
 			}
-		}
-	}()
+		}()
 
-	time.Sleep(20 * time.Millisecond)
-	close(done)
+		time.Sleep(20 * time.Millisecond)
+		close(done)
+		log.Print("fatal: couldn't get product catalog")
+	}
 
 	if err := jsonpb.Unmarshal(bytes.NewReader(catalogJSON), &cat); err != nil {
 		log.Printf("warning: failed to parse the catalog JSON: %v", err)
