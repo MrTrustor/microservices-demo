@@ -148,7 +148,7 @@ func parseCatalog() []*pb.Product {
 		}
 	}()
 
-	time.Sleep(5 * time.Millisecond)
+	time.Sleep(20 * time.Millisecond)
 	close(done)
 
 	if err := jsonpb.Unmarshal(bytes.NewReader(catalogJSON), &cat); err != nil {
