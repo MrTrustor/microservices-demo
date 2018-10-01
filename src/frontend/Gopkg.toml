@@ -34,8 +34,8 @@
   version = "0.5.0"
 
 [[constraint]]
-  branch = "master"
-  name = "github.com/GoogleCloudPlatform/microservices-demo"
+  branch = "demo"
+  name = "github.com/MrTrustor/microservices-demo"
 
 [[constraint]]
   name = "github.com/golang/protobuf"

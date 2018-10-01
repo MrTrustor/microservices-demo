@@ -357,6 +357,7 @@ type Product struct {
 	Description          string   `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
 	Picture              string   `protobuf:"bytes,4,opt,name=picture,proto3" json:"picture,omitempty"`
 	PriceUsd             *Money   `protobuf:"bytes,5,opt,name=price_usd,json=priceUsd,proto3" json:"price_usd,omitempty"`
+	Problem              bool     `protobuf:"varint,6,opt,name=problem,proto3" json:"problem,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
