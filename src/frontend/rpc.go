@@ -16,6 +16,7 @@ package main
 
 import (
 	"context"
+	"log"
 	"time"
 
 	pb "github.com/MrTrustor/microservices-demo/src/frontend/genproto"
@@ -65,6 +66,7 @@ func (fe *frontendServer) getProduct(ctx context.Context, id string) (*pb.Produc
 
 		time.Sleep(500 * time.Millisecond)
 		close(done)
+		log.Printf("warning: couldn't get product %s", resp.Id)
 	}
 	return resp, err
 }

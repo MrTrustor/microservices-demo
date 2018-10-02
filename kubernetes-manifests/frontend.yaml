@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: eu.gcr.io/next18-london-keynote/frontend
+          image: eu.gcr.io/next18-london-keynote/frontend:slow
           ports:
           env:
           - name: PRODUCT_CATALOG_SERVICE_ADDR

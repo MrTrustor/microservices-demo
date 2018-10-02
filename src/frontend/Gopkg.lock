@@ -27,15 +27,15 @@
   version = "v0.5.0"
 
 [[projects]]
-  branch = "master"
-  digest = "1:3ef905a7059a17712b7b27315692992f84f356e828d38f6ff0624e04103ec675"
-  name = "github.com/GoogleCloudPlatform/microservices-demo"
+  branch = "demo"
+  digest = "1:e9102a65854c9a2b25771c4ddb72bbfbab92398b040bbb4256e9293da83d8541"
+  name = "github.com/MrTrustor/microservices-demo"
   packages = [
     "src/frontend/genproto",
     "src/frontend/money",
   ]
   pruneopts = "UT"
-  revision = "6d969441585ade8c91c235115c7cdb12ac61354f"
+  revision = "d0f9b1c7f29410e1b1f856436c9626612b77495c"
 
 [[projects]]
   digest = "1:72856926f8208767b837bf51e3373f49139f61889b67dc7fd3c2a0fd711e3f7a"
@@ -315,8 +315,8 @@
   input-imports = [
     "cloud.google.com/go/profiler",
     "contrib.go.opencensus.io/exporter/stackdriver",
-    "github.com/GoogleCloudPlatform/microservices-demo/src/frontend/genproto",
-    "github.com/GoogleCloudPlatform/microservices-demo/src/frontend/money",
+    "github.com/MrTrustor/microservices-demo/src/frontend/genproto",
+    "github.com/MrTrustor/microservices-demo/src/frontend/money",
     "github.com/golang/protobuf/proto",
     "github.com/google/uuid",
     "github.com/gorilla/mux",
