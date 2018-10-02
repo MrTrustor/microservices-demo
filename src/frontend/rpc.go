@@ -16,9 +16,10 @@ package main
 
 import (
 	"context"
+	"log"
 	"time"
 
-	pb "github.com/GoogleCloudPlatform/microservices-demo/src/frontend/genproto"
+	pb "github.com/MrTrustor/microservices-demo/src/frontend/genproto"
 
 	"github.com/pkg/errors"
 )
@@ -51,6 +52,22 @@ func (fe *frontendServer) getProducts(ctx context.Context) ([]*pb.Product, error
 func (fe *frontendServer) getProduct(ctx context.Context, id string) (*pb.Product, error) {
 	resp, err := pb.NewProductCatalogServiceClient(fe.productCatalogSvcConn).
 		GetProduct(ctx, &pb.GetProductRequest{Id: id})
+	if resp.Problem {
+		done := make(chan int)
+		go func() {
+			for {
+				select {
+				case <-done:
+					return
+				default:
+				}
+			}
+		}()
+
+		time.Sleep(500 * time.Millisecond)
+		close(done)
+		log.Printf("warning: couldn't get product %s", resp.Id)
+	}
 	return resp, err
 }
 
