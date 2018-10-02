@@ -16,7 +16,6 @@ package main
 
 import (
 	"context"
-	"log"
 	"time"
 
 	pb "github.com/MrTrustor/microservices-demo/src/frontend/genproto"
@@ -52,10 +51,6 @@ func (fe *frontendServer) getProducts(ctx context.Context) ([]*pb.Product, error
 func (fe *frontendServer) getProduct(ctx context.Context, id string) (*pb.Product, error) {
 	resp, err := pb.NewProductCatalogServiceClient(fe.productCatalogSvcConn).
 		GetProduct(ctx, &pb.GetProductRequest{Id: id})
-	if resp.Problem {
-		problemProductCatalogService()
-		log.Printf("warning: couldn't get product %s", resp.Id)
-	}
 	return resp, err
 }
 
