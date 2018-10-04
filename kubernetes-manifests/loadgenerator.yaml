@@ -41,7 +41,7 @@ spec:
         image: eu.gcr.io/next18-london-keynote/loadgenerator
         env:
         - name: FRONTEND_ADDR
-          value: "frontend:80"
+          value: "35.186.238.31:80"
         - name: USERS
           value: "5"
         resources:

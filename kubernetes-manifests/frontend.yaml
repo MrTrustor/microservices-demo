@@ -67,10 +67,19 @@ kind: Service
 metadata:
   name: frontend-external
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: frontend
   ports:
   - name: http
     port: 80
     targetPort: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: frontend-ingress
+spec:
+  backend:
+    serviceName: frontend-external
+    servicePort: 80
