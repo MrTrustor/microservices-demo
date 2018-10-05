@@ -53,19 +53,7 @@ func (fe *frontendServer) getProduct(ctx context.Context, id string) (*pb.Produc
 	resp, err := pb.NewProductCatalogServiceClient(fe.productCatalogSvcConn).
 		GetProduct(ctx, &pb.GetProductRequest{Id: id})
 	if resp.Problem {
-		done := make(chan int)
-		go func() {
-			for {
-				select {
-				case <-done:
-					return
-				default:
-				}
-			}
-		}()
-
-		time.Sleep(500 * time.Millisecond)
-		close(done)
+		problemProductCatalogService()
 		log.Printf("warning: couldn't get product %s", resp.Id)
 	}
 	return resp, err
@@ -141,4 +129,20 @@ func (fe *frontendServer) getAd(ctx context.Context) ([]*pb.Ad, error) {
 		ContextKeys: nil,
 	})
 	return resp.GetAds(), errors.Wrap(err, "failed to get ads")
+}
+
+func problemProductCatalogService() {
+	done := make(chan int)
+	go func() {
+		for {
+			select {
+			case <-done:
+				return
+			default:
+			}
+		}
+	}()
+
+	time.Sleep(500 * time.Millisecond)
+	close(done)
 }
