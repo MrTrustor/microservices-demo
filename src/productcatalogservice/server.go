@@ -22,10 +22,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net"
-	"os"
-	"os/signal"
 	"strings"
-	"syscall"
 	"time"
 
 	pb "github.com/GoogleCloudPlatform/microservices-demo/src/productcatalogservice/genproto"
@@ -63,22 +60,6 @@ func main() {
 	go initTracing()
 	go initProfiling("productcatalogservice", "1.0.0")
 	flag.Parse()
-
-	sigs := make(chan os.Signal, 1)
-	signal.Notify(sigs, syscall.SIGUSR1, syscall.SIGUSR2)
-	go func() {
-		for {
-			sig := <-sigs
-			log.Printf("Received signal: %s", sig)
-			if sig == syscall.SIGUSR1 {
-				problem = true
-				log.Printf("Triggered problem")
-			} else {
-				problem = false
-				log.Printf("Removed problem")
-			}
-		}
-	}()
 
 	log.Printf("starting grpc server at :%d", *port)
 	run(*port)
