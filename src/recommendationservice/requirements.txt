@@ -21,7 +21,7 @@ pyasn1==0.4.3
 pyasn1-modules==0.2.2
 python-json-logger==0.1.9
 pytz==2018.5
-PyYAML==3.13
+PyYAML==5.4
 requests==2.20.0
 rsa==3.4.2
 six==1.11.0
